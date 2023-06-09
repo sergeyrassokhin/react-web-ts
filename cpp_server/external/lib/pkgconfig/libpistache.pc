@@ -6,7 +6,6 @@ Name: Pistache
 Description: An elegant C++ REST framework
 URL: https://pistacheio.github.io/pistache/
 Version: 0.1.1-git20230324
-Requires.private: RapidJSON
 Libs: -L${libdir} -lpistache
 Libs.private: -pthread
 Cflags: -I${includedir}
