@@ -72,5 +72,6 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/workspaces/react-web-ts/cpp_server"
 }
