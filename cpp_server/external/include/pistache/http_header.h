@@ -537,24 +537,21 @@ namespace Pistache::Http::Header
         NAME("Host");
 
         Host()
-            : host_()
+            : uriHost_()
             , port_(0)
         { }
 
         explicit Host(const std::string& data);
-        explicit Host(const std::string& host, Port port)
-            : host_(host)
-            , port_(port)
-        { }
+        explicit Host(const std::string& host, Port port);
 
         void parse(const std::string& data) override;
         void write(std::ostream& os) const override;
 
-        std::string host() const { return host_; }
+        std::string host() const { return uriHost_; }
         Port port() const { return port_; }
 
     private:
-        std::string host_;
+        std::string uriHost_;
         Port port_;
     };
 
@@ -628,19 +625,19 @@ namespace Pistache::Http::Header
         std::string ua_;
     };
 
-#define CUSTOM_HEADER(header_name)                                                  \
-    class header_name : public Pistache::Http::Header::Header                       \
+#define PISTACHE_CUSTOM_HEADER(header_class, header_name)                           \
+    class header_class : public Pistache::Http::Header::Header                      \
     {                                                                               \
     public:                                                                         \
-        NAME(#header_name)                                                          \
+        NAME(header_name)                                                           \
                                                                                     \
-        header_name() = default;                                                    \
+        header_class() = default;                                                   \
                                                                                     \
-        explicit header_name(const char* value)                                     \
+        explicit header_class(const char* value)                                    \
             : value_ { value }                                                      \
         { }                                                                         \
                                                                                     \
-        explicit header_name(std::string value)                                     \
+        explicit header_class(std::string value)                                    \
             : value_(std::move(value))                                              \
         { }                                                                         \
                                                                                     \
@@ -653,6 +650,8 @@ namespace Pistache::Http::Header
     private:                                                                        \
         std::string value_;                                                         \
     };
+
+#define CUSTOM_HEADER(header_name) PISTACHE_CUSTOM_HEADER(header_name, #header_name)
 
     class Raw
     {
